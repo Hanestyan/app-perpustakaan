@@ -2,61 +2,54 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreMemberRequest;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Data dummy anggota
+    private array $members = [
+        ['id' => 1, 'nama' => 'Reza', 'nim' => '3120600001', 'email' => 'reza@gmail.com', 'nomor_telepon' => '081234567890', 'alamat' => 'Jl. Kertajaya, Surabaya', 'status' => 'Aktif'],
+        ['id' => 2, 'nama' => 'Ladesh', 'nim' => '3120600002', 'email' => 'ladesh@gmail.com', 'nomor_telepon' => '081987654321', 'alamat' => 'Jl. Keputih, Surabaya', 'status' => 'Aktif'],
+    ];
+
     public function index()
     {
-        return "MemberController@index";
+        $members = $this->members;
+        
+        return view('members.index', compact('members'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        return "MemberController@create";
+        return view('members.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(StoreMemberRequest $request)
     {
-        return "MemberController@store";
+        // Validasi otomatis berjalan sebelum baris ini dieksekusi
+        $validated = $request->validated();
+
+        return redirect()->route('members.index')
+            ->with('success', "Anggota \"{$validated['nama']}\" berhasil ditambahkan (data dummy).");
     }
 
-    /**
-     * Display the specified resource.
-     */
+    // Method sisanya dibiarkan dummy dulu
     public function show(string $id)
     {
         return "MemberController@show, id: {$id}";
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         return "MemberController@edit, id: {$id}";
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        return "MemberController@update, id: {$id}";    
+        return "MemberController@update, id: {$id}";
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         return "MemberController@destroy, id: {$id}";
