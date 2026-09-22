@@ -59,9 +59,9 @@
         <label for="category_id">Kategori</label>
         <select name="category_id" id="category_id">
             <option value="">-- Pilih Kategori --</option>
-            @foreach ($categories as $category)
-                <option value="{{ $category['id'] }}" @selected(old('category_id', $book['category_id']) == $category['id'])>
-                    {{ $category['nama_kategori'] }}
+            @foreach ($categories as $cat)
+                <option value="{{ $cat->id }}" @selected(old('category_id') == $cat->id)>
+                    {{ $cat->nama_kategori }}
                 </option>
             @endforeach
         </select>

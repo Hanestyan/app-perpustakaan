@@ -1,18 +1,17 @@
 
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>Tambah Buku</title>
+@extends('layouts.app')
+
+@section('title', 'Tambah Buku')
+
+@section('content')
+    {{-- Tambahan CSS khusus form agar tetap rapi --}}
     <style>
-        body { font-family: sans-serif; margin: 40px; max-width: 500px; }
         label { display: block; margin-top: 12px; font-weight: bold; }
-        input, select { width: 100%; padding: 6px; margin-top: 4px; box-sizing: border-box; }
+        input, select { width: 100%; padding: 8px; margin-top: 4px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
         .error { color: #b91c1c; font-size: 14px; margin-top: 4px; }
-        .btn { margin-top: 20px; padding: 8px 16px; background: #2563eb; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+        form { max-width: 500px; }
     </style>
-</head>
-<body>
+
     <h1>Tambah Buku</h1>
     <p><a href="{{ route('books.index') }}">&larr; Kembali ke daftar buku</a></p>
 
@@ -58,9 +57,9 @@
         <label for="category_id">Kategori</label>
         <select name="category_id" id="category_id">
             <option value="">-- Pilih Kategori --</option>
-            @foreach ($categories as $category)
-                <option value="{{ $category['id'] }}" @selected(old('category_id') == $category['id'])>
-                    {{ $category['nama_kategori'] }}
+            @foreach ($categories as $cat)
+                <option value="{{ $cat->id }}" @selected(old('category_id') == $cat->id)>
+                    {{ $cat->nama_kategori }}
                 </option>
             @endforeach
         </select>
@@ -68,7 +67,6 @@
             <div class="error">{{ $message }}</div>
         @enderror
 
-        <button type="submit" class="btn">Simpan</button>
+        <button type="submit" class="btn" style="margin-top: 20px;">Simpan</button>
     </form>
-</body>
-</html>
+@endsection
