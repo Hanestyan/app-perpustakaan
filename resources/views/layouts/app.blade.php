@@ -19,6 +19,17 @@
         .btn { display: inline-block; padding: 6px 14px; background: #2563eb; color: #fff; text-decoration: none; border-radius: 4px; border: none; cursor: pointer; }
         form.inline { display: inline; }
         footer { text-align: center; padding: 20px; color: #6b7280; font-size: 14px; border-top: 1px solid #e5e7eb; margin-top: 40px; }
+        .badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #fff;
+            display: inline-block;
+        }
+        .badge-dipinjam { background-color: #f59e0b; } /* Kuning/Oranye */
+        .badge-dikembalikan { background-color: #10b981; } /* Hijau */
+        .badge-terlambat { background-color: #ef4444; } /* Merah */
     </style>
 </head>
 <body>
