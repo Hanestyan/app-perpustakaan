@@ -15,10 +15,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        $this->call([
+       $this->call([
             UserSeeder::class,
+            CategorySeeder::class,
+            BookSeeder::class,
+            MemberSeeder::class,
+            LoanSeeder::class,
         ]);
     }
 }

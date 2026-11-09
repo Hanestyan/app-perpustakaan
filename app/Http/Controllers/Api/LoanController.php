@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\LoanResource;
@@ -14,6 +16,28 @@ class LoanController extends Controller
         $loans = Loan::with(['member', 'user', 'loanItems.book'])->paginate(10);
 
         return LoanResource::collection($loans);
+    }
+
+    public function report(\Illuminate\Http\Request $request)
+    {
+        $body = ['data' => [], 'meta' => null];
+
+        try {
+            $response = Http::get(config('services.internal_api.base_url').'/api/loans', [
+                'page' => $request->query('page', 1),
+            ]);
+
+            if ($response->successful()) {
+                $body = $response->json();
+            }
+        } catch (ConnectionException $e) {
+            // Sama seperti Dashboard, diredam biar halaman tidak hancur kalau server API mati
+        }
+
+        return view('loans.report', [
+            'loans' => $body['data'] ?? [],
+            'meta' => $body['meta'] ?? null,
+        ]);
     }
 
     public function store(Request $request)

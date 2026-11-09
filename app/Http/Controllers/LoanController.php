@@ -20,9 +20,28 @@ class LoanController extends Controller
         return view('loans.index', compact('loans'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function report(\Illuminate\Http\Request $request)
+    {
+        $body = ['data' => [], 'meta' => null];
+
+        try {
+            $response = \Illuminate\Support\Facades\Http::get(config('services.internal_api.base_url').'/api/loans', [
+                'page' => $request->query('page', 1),
+            ]);
+
+            if ($response->successful()) {
+                $body = $response->json();
+            }
+        } catch (\Illuminate\Http\Client\ConnectionException $e) {
+            // Server internal API (port 8011) tidak bisa dihubungi - tabel laporan tampil kosong.
+        }
+
+        return view('loans.report', [
+            'loans' => $body['data'] ?? [],
+            'meta' => $body['meta'] ?? null,
+        ]);
+    }
+    
     public function create()
     {
         $members = Member::all();
